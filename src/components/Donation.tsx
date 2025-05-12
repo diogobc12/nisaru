@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { DollarSign } from 'lucide-react';
-import { useStripe } from '../hooks/useStripe';
-import { products } from '../stripe-config';
+import NoSSR from './NoSSR';
 
+// Donation component with Stripe Buy Button
 const Donation: React.FC = () => {
-  const [amount, setAmount] = useState<string>('');
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const { redirectToCheckout } = useStripe();
-  
-  const presetAmounts = ['5', '10', '25', '50', '100'];
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      await redirectToCheckout(products.donation.priceId, products.donation.mode);
-    } catch (error) {
-      console.error('Error during checkout:', error);
-      setIsSubmitting(false);
+  // Load Stripe buy button script
+  useEffect(() => {    
+    if (!document.querySelector('script[src="https://js.stripe.com/v3/buy-button.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://js.stripe.com/v3/buy-button.js';
+      script.async = true;
+      document.body.appendChild(script);
     }
-  };
+  }, []);
 
   return (
     <section id="donate" className="py-16 bg-emerald-50">
@@ -34,53 +26,24 @@ const Donation: React.FC = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-8">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">
-                  Donation Amount ($)
-                </label>
-                <input
-                  type="number"
-                  id="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter amount"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                  required
-                  min="1"
-                />
-              </div>
-              
-              <div className="flex flex-wrap gap-2 mb-6">
-                {presetAmounts.map((preset) => (
-                  <button
-                    key={preset}
-                    type="button"
-                    className={`px-4 py-2 rounded-md border ${
-                      amount === preset 
-                        ? 'bg-emerald-100 border-emerald-600 text-emerald-700'
-                        : 'border-gray-300 hover:bg-gray-50 text-gray-700'
-                    } transition-colors`}
-                    onClick={() => setAmount(preset)}
+          <div className="bg-white rounded-xl shadow-md p-8 flex justify-center">
+            <NoSSR
+              fallback={
+                <div className="py-4 px-6 bg-gray-100 rounded-lg">
+                  <p className="text-gray-500">Loading donation options...</p>
+                </div>
+              }
+            >
+              <div dangerouslySetInnerHTML={{ 
+                __html: `
+                  <stripe-buy-button
+                    buy-button-id="buy_btn_1RNi8OB37U8snqOLot95gVm5"
+                    publishable-key="pk_live_51RNcBcB37U8snqOLGLmsGdQczMstkyhEAc7uU5CLd44pi4GIh1ZuqxWelDVTRd0wPIEICanWHUTEYSbU3ezjezzj00DnDYMHA6"
                   >
-                    ${preset}
-                  </button>
-                ))}
-              </div>
-              
-              <button
-                type="submit"
-                className={`w-full py-3 px-4 text-white font-medium rounded-lg transition-all transform
-                  ${isSubmitting 
-                    ? 'bg-emerald-400 cursor-not-allowed' 
-                    : 'bg-emerald-600 hover:bg-emerald-700 hover:shadow-lg active:scale-[0.98]'
-                  }`}
-                disabled={isSubmitting || !amount}
-              >
-                {isSubmitting ? 'Processing...' : 'Donate Now'}
-              </button>
-            </form>
+                  </stripe-buy-button>
+                `
+              }} />
+            </NoSSR>
           </div>
         </div>
       </div>

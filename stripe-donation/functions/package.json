@@ -1,0 +1,9 @@
+{
+  "name": "stripe-donation-functions",
+  "version": "1.0.0",
+  "description": "Serverless functions for Stripe donations",
+  "main": "create-checkout-session.js",
+  "dependencies": {
+    "stripe": "^14.11.0"
+  }
+}

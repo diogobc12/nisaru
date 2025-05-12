@@ -1,0 +1,12 @@
+{
+  "name": "nisaru-api",
+  "version": "1.0.0",
+  "description": "Serverless functions for Nisaru EcoLife",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "^14.11.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

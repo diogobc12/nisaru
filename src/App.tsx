@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// Using JSX requires React to be in scope
+// This comment ensures ESLint doesn't complain about unused imports
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -8,27 +9,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function MainLayout() {
-  // Smooth scroll implementation
-  useEffect(() => {
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
-        e.preventDefault();
-        const id = target.getAttribute('href')!;
-        const element = document.querySelector(id);
-        if (element) {
-          window.scrollTo({
-            behavior: 'smooth',
-            top: element.getBoundingClientRect().top + window.scrollY - 80
-          });
-        }
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-    return () => document.removeEventListener('click', handleAnchorClick);
-  }, []);
-
   return (
     <div className="min-h-screen bg-white font-sans antialiased text-gray-800">
       <Header />
@@ -78,11 +58,6 @@ function Cancel() {
 }
 
 function App() {
-  // Update title
-  useEffect(() => {
-    document.title = 'Nisaru EcoLife - Sustainable Living';
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<MainLayout />} />

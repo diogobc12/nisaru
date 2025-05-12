@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donation Successful - Nisaru EcoLife</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f9f4;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <header class="bg-white shadow-sm py-4">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+          <span class="text-xl font-semibold text-green-800">Nisaru EcoLife</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="p-6 text-center">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-green-800 mb-3">Thank You!</h1>
+        <p class="text-gray-600 mb-6">Your donation was successful. Your support helps us continue our mission for a more sustainable future.</p>
+        
+        <div class="mb-8">
+          <div class="text-3xl font-bold text-green-700 mb-1" id="amount">$<span id="donation-amount">0.00</span></div>
+          <div class="text-sm text-gray-500">Donation amount</div>
+        </div>
+        
+        <div class="space-y-3">
+          <a href="index.html" class="block w-full bg-green-600 text-white font-medium py-3 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors">
+            Make Another Donation
+          </a>
+          <a href="/" class="block w-full bg-white text-green-600 border border-green-600 font-medium py-3 px-4 rounded-md hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors">
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-green-800 text-white py-4 text-center mt-auto">
+    <p>&copy; 2025 Nisaru EcoLife. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get amount from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const amount = urlParams.get('amount');
+      
+      if (amount) {
+        document.getElementById('donation-amount').textContent = parseFloat(amount).toFixed(2);
+      } else {
+        document.getElementById('amount').textContent = 'Thank you for your donation';
+      }
+    });
+  </script>
+</body>
+
+</html>
